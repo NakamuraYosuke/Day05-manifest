@@ -18,6 +18,12 @@ $ open /Applications/Docker.app
 
 ## Dockerfileを用いたアプリケーションのビルド
 
+主な流れ
+- Apacheコンテナを定義するDockerfileを作成します
+- コンテナをビルドし、出来上がったイメージをDocker Hubへpushします
+- Docker Hubのイメージを元にしたDeploymentを定義します
+- Serviceを定義してアプリケーションを公開します
+
 以下、例では作業ディレクトリを`~/container-build`とします。
 
 ```
@@ -183,3 +189,13 @@ $ curl -s http://192.168.64.2:30696
 </body>
 </html>
 ```
+
+## 演習問題：javaアプリケーションのデプロイ
+主な流れ
+- javaアプリケーションを定義するDockerfileを作成します
+- コンテナをビルドし、出来上がったイメージをDocker Hubへpushします
+- Docker Hubのイメージを元にしたDeploymentを定義します
+- Serviceを定義してアプリケーションを公開します
+
+### STEP1  アプリケーション資材の取得
+アプリケーションファイル：`hello-java.jar`と実行ファイル`run-app.sh`を取得します。

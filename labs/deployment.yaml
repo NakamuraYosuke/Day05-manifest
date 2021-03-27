@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: myapp
+  name: myapp
+  namespace: container-build
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myapp
+  template:
+    metadata:
+      labels:
+        deployment: myapp
+    spec:
+      containers:
+      - image: nakanakau/myapp:latest
+        name: myapp
+        ports:
+        - containerPort: 8080
+          protocol: TCP
