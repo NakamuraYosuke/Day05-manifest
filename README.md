@@ -199,3 +199,53 @@ $ curl -s http://192.168.64.2:30696
 
 ### STEP1  アプリケーション資材の取得
 アプリケーションファイル：`hello-java.jar`と実行ファイル`run-app.sh`を取得します。
+hello-java.jar：https://github.com/NakamuraYosuke/Day05-manifest/raw/main/labs/hello-java.jar
+
+run-app.sh：https://raw.githubusercontent.com/NakamuraYosuke/Day05-manifest/main/labs/run-app.sh
+
+### STEP2　Dockerfile作成
+下記のDockerfileを作成します。
+```
+FROM   registry.access.redhat.com/ubi8/ubi:8.0
+
+# command line options to pass to the JVM
+ENV	  JAVA_OPTIONS -Xmx512m
+
+
+# Install the Java runtime, create a user for running the app, and set permissions
+RUN   yum install -y --disableplugin=subscription-manager java-1.8.0-openjdk-headless && \
+      yum clean all --disableplugin=subscription-manager -y && \
+      mkdir -p /opt/app-root/bin
+
+# Copy the runnable fat JAR to the container.
+COPY  hello-java.jar /opt/app-root/bin/
+
+COPY  run-app.sh /opt/app-root/bin/
+
+RUN   chgrp -R 0 /opt/app-root && \
+      chmod -R g=u /opt/app-root
+
+RUN   chmod -R 755 /opt/app-root/bin
+
+EXPOSE 8080
+
+USER  1001
+
+# Run the fat JAR
+CMD   /opt/app-root/bin/run-app.sh
+```
+
+### STEP3　Dockerfileのビルド
+`myapp`という名前でビルドします。
+
+### STEP4　自身のDocker Hubへイメージをpush
+`myapp`というイメージ名でpushします。
+
+### STEP5　Deploymentの作成
+`myapp`という名前のDeploymentを作成します。
+
+### STEP6　Serviceの作成
+`myapp`という名前のServiceをNodePortタイプで作成します。
+
+### STEP7　アプリケーションへのアクセス
+`http://<crcのIPアドレス>:<バインドされたポート番号>/api/hello`にアクセスし、Podの名前が表示されることを確認する。

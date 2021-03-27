@@ -17,7 +17,7 @@ COPY  run-app.sh /opt/app-root/bin/
 RUN   chgrp -R 0 /opt/app-root && \
       chmod -R g=u /opt/app-root
 
-RUN   chmod -x 755 /opt/app-root/run-app.sh
+RUN   chmod -R 755 /opt/app-root/bin
 
 EXPOSE 8080
 
