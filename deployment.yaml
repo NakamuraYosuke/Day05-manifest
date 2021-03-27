@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hola
+  name: hola
+  namespace: container-build
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: hola
+  template:
+    metadata:
+      labels:
+        deployment: hola
+    spec:
+      containers:
+      - image: nakanakau/hola:latest
+        name: hola
+        ports:
+        - containerPort: 8080
+          protocol: TCP
